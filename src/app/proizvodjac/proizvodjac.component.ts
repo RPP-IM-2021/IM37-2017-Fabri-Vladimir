@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Proizvodjac } from '../model/proizvodjac.model';
+import { ProizvodjacService } from '../service/proizvodjac.service';
 
 @Component({
   selector: 'app-proizvodjac',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProizvodjacComponent implements OnInit {
 
-  constructor() { }
+  displayedColumns = ['id', 'naziv', 'adresa', 'kontakt', 'actions'];
+
+  dataSource: Observable<Proizvodjac[]>;
+
+  constructor(public proizvodjacService: ProizvodjacService) { }
 
   ngOnInit(): void {
+    this.loadData();
   }
 
+  public loadData(){
+    this.dataSource = this.proizvodjacService.getAllProizvodjac();
+  }
 }
